@@ -1,13 +1,10 @@
 function postSummary = mbe_plotPost(paramSampleVec, varargin)
-% ,credMass,compVal,...
- %   rope, ylab, xlab, xLim, plotTitle,showMode)
-    
 %% mbe_plotPost
 % Plotting posterior distributions.
 % paramSampleVec, credMass, compVal, rope, ylab, xlab, xlim,
 % title, showMode
 
-% Largely based on Kruschke, 2011.
+% Largely based on code by Kruschke, 2011.
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-13
@@ -18,34 +15,46 @@ function postSummary = mbe_plotPost(paramSampleVec, varargin)
 
 % Get input
 p = inputParser;
-   defaultCredMass = 0.95;
-   defaultCompVal = NaN;
-   defaultYLab = '';
-   defaultXLab = '';
-   defaultPlotTitle = '';
-   defaultShowMode = 1;
-   addRequired(p,'paramSampleVec',@isnumeric);
-   addOptional(p,'credMass',defaultCredMass,@isnumeric);
-   addOptional(p,'compVal',defaultCompVal,@isnumeric);
-   addOptional(p,'ylab',defaultYLab);
-   addOptional(p,'xlab',defaultXLab);
-   addOptional(p,'xLim',0);
-   addOptional(p,'plotTitle',defaultPlotTitle);
-    addOptional(p,'showMode',defaultShowMode);
-   parse(p,paramSampleVec,varargin{:});
-
-%% 
+defaultCredMass = 0.95;
+defaultCompVal = NaN;
+defaultYLab = '';
+defaultXLab = '';
+defaultXLim = 0;
+defaultPlotTitle = '';
+defaultShowMode = 1;
+defaultRope = 0;
+addRequired(p,'paramSampleVec',@isnumeric);
+addOptional(p,'credMass',defaultCredMass,@isnumeric);
+addOptional(p,'compVal',defaultCompVal,@isnumeric);
+addOptional(p,'ylab',defaultYLab);
+addOptional(p,'xlab',defaultXLab);
+addOptional(p,'xLim',defaultXLim);
+addOptional(p,'plotTitle',defaultPlotTitle);
+addOptional(p,'showMode',defaultShowMode);
+addOptional(p,'rope',defaultRope);
+parse(p,paramSampleVec,varargin{:});
+credMass = p.Results.credMass;
+compVal = p.Results.compVal;
+ylab = p.Results.ylab;
+xlab = p.Results.xlab;
+xLim = p.Results.xLim;
+plotTitle = p.Results.plotTitle;
+showMode = p.Results.showMode;
+rope = p.Results.rope;
 if xLim == 0
     xLim(1) = min(paramSampleVec);
     xLim(2) = max([compVal;paramSampleVec]);
 end
-if ylab == 0, ylab = ''; end
 
+%% Get statistics
+% Get mean and median
 postSummary.mean = mean(paramSampleVec);
 postSummary.median = median(paramSampleVec);
+% Get mode of continous variable using density function
 [f,xi] = ksdensity(paramSampleVec);
-[Y,I] = max(f);
+[~,I] = max(f);
 postSummary.mode = xi(I);
+% Get highest density interval
 HDI = HDIofMCMC(paramSampleVec,credMass);
 postSummary.hdiMass = credMass;
 postSummary.hdiLow = HDI(1);
@@ -53,54 +62,48 @@ postSummary.hdiHigh = HDI(2);
 
 %% Plot histogram.
 [f,x] = hist(paramSampleVec,30);
+% To make sure that histogram sums to one, normalize with f/sum(f)
 bar(x, f/sum(f),'BarWidth',0.85,'EdgeColor','None','FaceColor',[0.4 0.7 1]);
 xlim(xLim); xlabel(xlab); ylabel(ylab); title(plotTitle,'FontWeight','bold');
 yLim = max(f/sum(f));
 box off;
+hold on;
 
-%% Display mean or mode:
+%% Display mean or mode
 if showMode == 0
-    %         meanParam = mean(paramSampleVec);
-    %         text(num2str(meanParam), cenTendHt ,
-    %               bquote(mean==.(signif(meanParam,3))) , adj=c(.5,0) , cex=cex )
+    meanParam = postSummary.mean;
+    text(meanParam,yLim,['mean = ' num2str(meanParam,'%.2f')]);
 else
     modeParam = postSummary.mode;
     text(modeParam,yLim,['mode = ' num2str(modeParam,'%.2f')]);
 end
 
-%% TO BE IMPLEMENTED. Display the comparison value.
-%     if compVal ~= 0
-%       cvCol = 'g';
-%       pcgtCompVal = round(100*sum(paramSampleVec>compVal)...
-%                             ./ length(paramSampleVec));
-%        pcltCompVal = 100 - pcgtCompVal;
-%        plot( c(compVal,compVal) , c(0.96*cvHt,0) ,
-%               lty='dotted' , lwd=1 , col=cvCol )
-%        text( compVal , cvHt ,
-%              bquote( .(pcltCompVal)*'% < ' *
-%                      .(signif(compVal,3)) * ' < '*.(pcgtCompVal)*'%' ) ,
-%              adj=c(pcltCompVal/100,0) , cex=0.8*cex , col=cvCol )
-%       postSummary[,'compVal'] = compVal
-%       postSummary[,'pcGTcompVal'] = ( sum( paramSampleVec > compVal )
-%                                   / length( paramSampleVec ) )
-%     end
+%% Display the comparison value
+if ~isnan(compVal)
+    pcRtCompVal = round(100 * sum(paramSampleVec > compVal)...
+        ./ length(paramSampleVec));
+    pcLtCompVal = 100 - pcRtCompVal;
+    plot([compVal,compVal], [yLim,0],'g');
+    text(compVal, 0.75*yLim, [num2str(pcLtCompVal) '% < ' num2str(compVal)...
+        ' < ' num2str(pcRtCompVal) '%']);
+    postSummary.compVal = compVal;
+    postSummary.pcGTcompVal = sum((paramSampleVec > compVal)...
+        ./ length(paramSampleVec));
+end
 
-%% Display the ROPE.
+%% Display the ROPE
 if rope ~= 0
     pcInROPE = sum(paramSampleVec > rope(1) & paramSampleVec < rope(2))...
         ./ length(paramSampleVec);
-    line([rope(1),rope(1)],[0,yLim*0.5],'Color','r','LineStyle','--');
-    line([rope(2),rope(2)],[0,yLim*0.5],'Color','r','LineStyle','--');
-    
+    line([rope(1),rope(1)],[0,yLim],'Color','r','LineStyle','--');
+    line([rope(2),rope(2)],[0,yLim],'Color','r','LineStyle','--');
     postSummary.ROPElow = rope(1);
     postSummary.ROPEhigh = rope(2);
     postSummary.pcInROPE = pcInROPE;
 end
 
-
-%% Display the HDI.
+%% Display the HDI
 line(HDI,[0,0],'Color','k','LineWidth',5)
-% text(mean(HDI),yLim*0.3, [num2str(100*credMass) '% HDI']);
 text(HDI(1),yLim*0.4, num2str(HDI(1),'%.2f'));
 text(HDI(2),yLim*0.4, num2str(HDI(2),'%.2f'));
 
