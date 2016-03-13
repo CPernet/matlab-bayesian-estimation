@@ -10,9 +10,14 @@ function ICDFname = HDIofICDF( ICDFname , credMass , tol)
 %   HDIofICDF( qbeta , shape1 = 30 , shape2 = 12 )
 %   Notice that the parameters of the ICDFname must be explicitly named;
 %   e.g., HDIofICDF( qbeta , 30 , 12 ) does not work.
-% Adapted and corrected from Greg Snow's TeachingDemos package.
+% 
+% Largely based on:
 % Kruschke, J. K. (2011). Doing Bayesian data analysis: A
 % Tutorial with R and BUGS. Elsevier Science/Academic Press.
+%
+% Nils Winter
+% nils.winter1@gmail.com
+% University of Frankfurt, Department of Cognitive Psychology II
 
 if ~exist('credMass')
     credMass = 0.95;
