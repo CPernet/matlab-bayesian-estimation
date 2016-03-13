@@ -1,20 +1,40 @@
-function postSummary = mb_plotPost(paramSampleVec,credMass,compVal,...
-    rope, ylab, xlab, xLim, plotTitle,showMode)
-%% plotPost
-% Plotting prior and posterior distributions.
+function postSummary = mbe_plotPost(paramSampleVec, varargin)
+% ,credMass,compVal,...
+ %   rope, ylab, xlab, xLim, plotTitle,showMode)
+    
+%% mbe_plotPost
+% Plotting posterior distributions.
 % paramSampleVec, credMass, compVal, rope, ylab, xlab, xlim,
 % title, showMode
 
 % Largely based on Kruschke, 2011.
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
-% Created: 2016-03-13 21:29
+% Created: 2016-03-13
 % Changed:
 % Version: v0.2
-% Developed in Matlab 8.1.0.604 (R2013a) on PCWIN
+% Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 
+% Get input
+p = inputParser;
+   defaultCredMass = 0.95;
+   defaultCompVal = NaN;
+   defaultYLab = '';
+   defaultXLab = '';
+   defaultPlotTitle = '';
+   defaultShowMode = 1;
+   addRequired(p,'paramSampleVec',@isnumeric);
+   addOptional(p,'credMass',defaultCredMass,@isnumeric);
+   addOptional(p,'compVal',defaultCompVal,@isnumeric);
+   addOptional(p,'ylab',defaultYLab);
+   addOptional(p,'xlab',defaultXLab);
+   addOptional(p,'xLim',0);
+   addOptional(p,'plotTitle',defaultPlotTitle);
+    addOptional(p,'showMode',defaultShowMode);
+   parse(p,paramSampleVec,varargin{:});
 
+%% 
 if xLim == 0
     xLim(1) = min(paramSampleVec);
     xLim(2) = max([compVal;paramSampleVec]);
