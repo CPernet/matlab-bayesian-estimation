@@ -1,6 +1,5 @@
 %% Example for Matlab-Bayes-Estimation
-% mb_example.m
-% 
+% mb_example
 % Syntax: 
 %
 % Example:   
