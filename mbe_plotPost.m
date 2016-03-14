@@ -1,8 +1,25 @@
 function postSummary = mbe_plotPost(paramSampleVec, varargin)
 %% mbe_plotPost
-% Plotting posterior distributions.
-% paramSampleVec, credMass, compVal, rope, ylab, xlab, xlim,
-% title, showMode
+% Plotting posterior distributions with highest density interval. 
+% 
+% INPUT:
+% paramSampleVec is a MCMC chain with n iterations.
+%
+% Specify the following name/value pairs for additional plot options:
+%
+%       Parameter        Value
+%       'credMass'       credibility mass (default = 0.95)
+%       'compVal'        comparison value, i.e. for differences use 0    
+%       'rope'           region of practical equivalence, i.e. [-0.1 0.1]
+%       'ylab'           y-Label
+%       'xlab'           x-Label
+%       'plotTitle'      plot title
+%       'showMode'       show mode (=0) or mean (=1); default is mode
+%       'xLim'           provide x-axis limit, i.e. [-3 3]
+%
+%
+% EXAMPLE:
+% postSummary = mbe_plotPost(paramSampleVec,'rope',[-0.1 0.1],'credMass',0.95)
 
 % Largely based on code by Kruschke, 2011.
 % Nils Winter (nils.winter1@gmail.com)
@@ -85,7 +102,7 @@ if ~isnan(compVal)
     pcLtCompVal = 100 - pcRtCompVal;
     plot([compVal,compVal], [yLim,0],'g');
     text(compVal, 0.75*yLim, [num2str(pcLtCompVal) '% < ' num2str(compVal)...
-        ' < ' num2str(pcRtCompVal) '%']);
+        ' < ' num2str(pcRtCompVal) '%'],'Color','g');
     postSummary.compVal = compVal;
     postSummary.pcGTcompVal = sum((paramSampleVec > compVal)...
         ./ length(paramSampleVec));
