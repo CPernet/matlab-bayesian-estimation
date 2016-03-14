@@ -1,5 +1,16 @@
-function summary = BESTsummary(y1,y2,mcmcChain)
-%source('HDIofMCMC.R') % in DBDA2E-utilities.R
+function summary = BESTsummary(mcmcChain)
+%% BESTsummary
+
+% Largely based on R code by Kruschke, J. K. (2015). Doing Bayesian Data Analysis, 
+% Second Edition: A Tutorial with R, JAGS, and Stan. Academic Press / Elsevier.
+% see http://www.indiana.edu/~kruschke/BEST/ for R code
+% Nils Winter (nils.winter1@gmail.com)
+% Johann-Wolfgang-Goethe University, Frankfurt
+% Created: 2016-03-13
+% Changed:
+% Version: v0.2
+% Matlab 8.1.0.604 (R2013a) on PCWIN
+%-------------------------------------------------------------------------
 
 summary.mu1 = mcmcSummary(mcmcChain.mu(:,1));
 summary.mu2 = mcmcSummary(mcmcChain.mu(:,2));

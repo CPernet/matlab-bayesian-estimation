@@ -18,8 +18,7 @@ function hdiLim = HDIofICDF(ICDFname, credMass)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-13
-% Changed:
-% Version: v0.2
+% Version: v0.2 (2016-03-14)
 % Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 

@@ -3,7 +3,7 @@
 % see http://www.indiana.edu/~kruschke/BEST/ for R code
 % This is a Matlab-Version of John Kruschke's R code
 
-cd('D:\Exp Data\Glasgow\matBEST');
+cd('C:\Users\Nils\Dropbox\Git\matBEST');
 % This function generates an MCMC sample from the posterior distribution.
 % Description of arguments:
 % showMCMC is a flag for displaying diagnostic graphs of the chains.
@@ -19,11 +19,11 @@ cd('D:\Exp Data\Glasgow\matBEST');
 % load('D:\Exp Data\Glasgow\Fei\mi_leye_rt_bubinv_Nils.mat');
 % y1 = mi_leye_rt.face(1,:);
 % y2 = mi_leye_rt.face(2,:);
-load('D:\Exp Data\Glasgow\Fei\mi_leye_erp_RE_bubinv_Nils.mat');
+load('C:\Users\Nils\Dropbox\Nils Uni\Master\Praktikum\Glasgow\Fei\mi_leye_erp_RE_bubinv_Nils.mat');
 data{1} = mi_leye_erp.face_RE(1,:,:);
 data{2} = mi_leye_erp.face_RE(2,:,:);
 
-for indTime = 1:size(data{1},2)
+for indTime = 1%:size(data{1},2)
     y1 = squeeze(data{1}(1,indTime,:))';
     y2 = squeeze(data{2}(1,indTime,:))';
     
@@ -55,9 +55,9 @@ Ntotal = length(y);
 
 % Specify the data and prior constants in a structure, for later shipment to JAGS:
 if priorOnly
-    [Sh1, Ra1] = gammaShRaFromModeSD(sigma1PriorMode,sigma1PriorSD);
-    [Sh2, Ra2] = gammaShRaFromModeSD(sigma2PriorMode,sigma2PriorSD);
-    [ShNu, RaNu] = gammaShRaFromMeanSD(nuPriorMean,nuPriorSD);
+    [Sh1, Ra1] = gammaShRa(sigma1PriorMode,sigma1PriorSD,'mode');
+    [Sh2, Ra2] = gammaShRa(sigma2PriorMode,sigma2PriorSD,'mode');
+    [ShNu, RaNu] = gammaShRa(nuPriorMean,nuPriorSD,'mean');
     
     dataList = struct('x',x,'Ntotal',Ntotal,...
         'mu1PriorMean',mu1PriorMean,'mu1PriorSD',mu1PriorSD,...
@@ -65,9 +65,9 @@ if priorOnly
         'Sh1',Sh1,'Ra1',Ra1,'Sh2',Sh2,'Ra2',Ra2,'ShNu',ShNu,'RaNu',RaNu);
     
 else
-    [Sh1, Ra1] = gammaShRaFromModeSD(sigma1PriorMode,sigma1PriorSD);
-    [Sh2, Ra2] = gammaShRaFromModeSD(sigma2PriorMode,sigma2PriorSD);
-    [ShNu, RaNu] = gammaShRaFromMeanSD(nuPriorMean,nuPriorSD);
+    [Sh1, Ra1] = gammaShRa(sigma1PriorMode,sigma1PriorSD,'mode');
+    [Sh2, Ra2] = gammaShRa(sigma2PriorMode,sigma2PriorSD,'mode');
+    [ShNu, RaNu] = gammaShRa(nuPriorMean,nuPriorSD,'mean');
     
     dataList = struct('y',y,'x',x,'Ntotal',Ntotal,...
         'mu1PriorMean',mu1PriorMean,'mu1PriorSD',mu1PriorSD,...
@@ -141,7 +141,7 @@ end
 % mcmcChain = as.matrix(codaSamples); % NEEDS TO BE CHECKED
 
 %% SUMMARY
-summary{indTime} = BESTsummary(y1,y2,structArray);
+summary{indTime} = BESTsummary(structArray);
 end
 
 %% PLOTS
