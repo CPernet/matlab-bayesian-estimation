@@ -77,7 +77,7 @@ postSummary.hdiMass = credMass;
 postSummary.hdiLow = HDI(1);
 postSummary.hdiHigh = HDI(2);
 
-%% Plot histogram.
+%% Plot histogram
 [f,x] = hist(paramSampleVec,30);
 % To make sure that histogram sums to one, normalize with f/sum(f)
 bar(x, f/sum(f),'BarWidth',0.85,'EdgeColor','None','FaceColor',[0.4 0.7 1]);
@@ -95,31 +95,32 @@ else
     text(modeParam,yLim,['mode = ' num2str(modeParam,'%.2f')]);
 end
 
-%% Display the comparison value
+%% Display comparison value
 if ~isnan(compVal)
     pcRtCompVal = round(100 * sum(paramSampleVec > compVal)...
         ./ length(paramSampleVec));
     pcLtCompVal = 100 - pcRtCompVal;
-    plot([compVal,compVal], [yLim,0],'g');
-    text(compVal, 0.75*yLim, [num2str(pcLtCompVal) '% < ' num2str(compVal)...
-        ' < ' num2str(pcRtCompVal) '%'],'Color','g');
+    plot([compVal,compVal], [yLim,0],'Color',[0 0.5 0],'LineWidth',2);
+    text(compVal, 0.75*yLim, ['compValue: ' num2str(pcLtCompVal) '% < '...
+        num2str(compVal) ' < ' num2str(pcRtCompVal) '%'],'Color',[0 0.5 0]);
     postSummary.compVal = compVal;
     postSummary.pcGTcompVal = sum((paramSampleVec > compVal)...
         ./ length(paramSampleVec));
 end
 
-%% Display the ROPE
+%% Display ROPE
 if rope ~= 0
     pcInROPE = sum(paramSampleVec > rope(1) & paramSampleVec < rope(2))...
         ./ length(paramSampleVec);
-    line([rope(1),rope(1)],[0,yLim],'Color','r','LineStyle','--');
-    line([rope(2),rope(2)],[0,yLim],'Color','r','LineStyle','--');
+    line([rope(1),rope(1)],[0,yLim],'Color','r','LineStyle','--','LineWidth',2);
+    line([rope(2),rope(2)],[0,yLim],'Color','r','LineStyle','--','LineWidth',2);
+    text(rope(2), 0.5*yLim,[num2str(round(100*pcInROPE)) '% in ROPE'],'Color','r');
     postSummary.ROPElow = rope(1);
     postSummary.ROPEhigh = rope(2);
     postSummary.pcInROPE = pcInROPE;
 end
 
-%% Display the HDI
+%% Display HDI
 line(HDI,[0,0],'Color','k','LineWidth',5)
 text(HDI(1),yLim*0.4, num2str(HDI(1),'%.2f'));
 text(HDI(2),yLim*0.4, num2str(HDI(2),'%.2f'));
