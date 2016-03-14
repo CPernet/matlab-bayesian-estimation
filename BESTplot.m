@@ -77,7 +77,7 @@ maxX = max([y1,y2]);
 xRange = [minX,maxX];
 
 if isequal(xRange(1),xRange(2))
-    meanSigma = mean([sigma1,sigma2]);
+    meanSigma = mean([sigma1;sigma2]);
     xRange(1) = xRange(1)-meanSigma;
     xRange(2) = xRange(2)+meanSigma;
 end
@@ -129,7 +129,7 @@ hold off
 % Plot posterior distribution of parameter nu:
 %-----------------------------------------------------------------
 subplot(5,2,9);
-plotPost(log10(nu),0.95,0,0,'','log10(\nu)',0,'Normality',1);
+mbe_plotPost(log10(nu),'credMass',0.95,'xlab','log10(\nu)');
 
 %-----------------------------------------------------------------
 % Plot posterior distribution of parameters mu1, mu2, and their difference:
@@ -138,11 +138,11 @@ xLim(1) = min([mu1;mu2]);
 xLim(2) = max([mu1;mu2]);
 
 subplot(5,2,1);
-plotPost(mu1,0.95,1,0,'','\mu1',xLim,'Group 1 Mean',1);
+mbe_plotPost(mu1,'xlab','\mu1','xlim',xLim,'Plottitle','Group 1 Mean');
 subplot(5,2,3);
-plotPost(mu2,0.95,1,0,'','\mu2',xLim,'Group 2 Mean',1);
+mbe_plotPost(mu2,'xlab','\mu2','xlim',xLim,'PlotTitle','Group 2 Mean');
 subplot(5,2,6);
-plotPost(mu1-mu2,0.95,0,0,'','\mu1-\mu2',0,'Difference of Means',1);
+mbe_plotPost(mu1-mu2,'xlab','\mu1-\mu2','PlotTitle','Difference of Means');
 
 
 %-----------------------------------------------------------------
@@ -151,11 +151,11 @@ plotPost(mu1-mu2,0.95,0,0,'','\mu1-\mu2',0,'Difference of Means',1);
 xLim(1) = min([sigma1;sigma2]);
 xLim(2) = max([sigma1;sigma2]);
 subplot(5,2,5);
-plotPost(sigma1,0.95,1,0,'','\sigma1',xLim,'Group 1 Std. Dev.',1);
+mbe_plotPost(sigma1,'xlab','\sigma1','xlim',xLim,'PlotTitle','Group 1 Std. Dev.');
 subplot(5,2,7);
-plotPost(sigma2,0.95,1,0,'','\sigma2',xLim,'Group 2 Std. Dev.',1);
+mbe_plotPost(sigma2,'xlab','\sigma2','xlim',xLim,'PlotTitle','Group 2 Std. Dev.');
 subplot(5,2,8);
-plotPost(sigma1-sigma2,0.95,0,0,'','\sigma1-\sigma2',0,'Difference of Std. Dev.',1);
+mbe_plotPost(sigma1-sigma2,'xlab','\sigma1-\sigma2','PlotTitle','Difference of Std. Dev.');
 
 %-----------------------------------------------------------------
 % Plot of estimated effect size. Effect size is d-sub-a from
@@ -165,7 +165,7 @@ effectSize = (mu1 - mu2) ./ sqrt(( sigma1.^2 + sigma2.^2 ) / 2 );
 subplot(5,2,10);
 % str = '(\mu1-\mu2)/\sqrt((\sigma1^2+\sigma2^2)/2';
 str = '(\mu1-\mu2)/sqrt((\sigma1^2+\sigma2^2)/2)';
-plotPost(effectSize,0.95,0,[-0.1,0.1],'',str,0,'Effect Size',1);
+mbe_plotPost(effectSize,'rope',[-0.1,0.1],'xlab',str,'PlotTitle','Effect Size');
 
 % Or use sample-size weighted version:
 % Hedges 1981; Wetzels, Raaijmakers, Jakab & Wagenmakers 2009.

@@ -1,5 +1,5 @@
 function mbe_plotPairs(params,paramNames,nPtToPlot)
-% mbe_plotPairs
+%% mbe_plotPairs
 %   Plot matrix of scatter plots for any combination of parameters.
 %
 % INPUT:
@@ -13,6 +13,9 @@ function mbe_plotPairs(params,paramNames,nPtToPlot)
 %
 % EXAMPLE:
 
+% Largely based on R code by Kruschke, J. K. (2015). Doing Bayesian Data Analysis,
+% Second Edition: A Tutorial with R, JAGS, and Stan. Academic Press / Elsevier.
+% see http://www.indiana.edu/~kruschke/BEST/ for R code
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-14

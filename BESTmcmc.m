@@ -16,17 +16,17 @@ cd('C:\Users\Nils\Dropbox\Git\matBEST');
 % y2 = [99,101,100,101,102,100,97,101,104,101,102,102,100,105,88,101,100,...
 %        104,100,100,100,101,102,103,97,101,101,100,101,99,101,100,100,...
 %        101,100,99,101,100,102,99,100,99];
-% load('D:\Exp Data\Glasgow\Fei\mi_leye_rt_bubinv_Nils.mat');
-% y1 = mi_leye_rt.face(1,:);
-% y2 = mi_leye_rt.face(2,:);
-load('C:\Users\Nils\Dropbox\Nils Uni\Master\Praktikum\Glasgow\Fei\mi_leye_erp_RE_bubinv_Nils.mat');
-data{1} = mi_leye_erp.face_RE(1,:,:);
-data{2} = mi_leye_erp.face_RE(2,:,:);
+load('C:\Users\Nils\Dropbox\Nils Uni\Master\Praktikum\Glasgow\Fei\mi_leye_rt_bubinv_Nils.mat');
+y1 = mi_leye_rt.face(1,:);
+y2 = mi_leye_rt.face(2,:);
+% load('C:\Users\Nils\Dropbox\Nils Uni\Master\Praktikum\Glasgow\Fei\mi_leye_erp_RE_bubinv_Nils.mat');
+% data{1} = mi_leye_erp.face_RE(1,:,:);
+% data{2} = mi_leye_erp.face_RE(2,:,:);
 
 for indTime = 1%:size(data{1},2)
-    y1 = squeeze(data{1}(1,indTime,:))';
-    y2 = squeeze(data{2}(1,indTime,:))';
-    
+%     y1 = squeeze(data{1}(1,indTime,:))';
+%     y2 = squeeze(data{2}(1,indTime,:))';
+%     
 
    
 priorOnly = 0;
@@ -141,7 +141,7 @@ end
 % mcmcChain = as.matrix(codaSamples); % NEEDS TO BE CHECKED
 
 %% SUMMARY
-summary{indTime} = BESTsummary(structArray);
+%summary{indTime} = BESTsummary(structArray);
 end
 
 %% PLOTS

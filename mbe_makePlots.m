@@ -55,6 +55,17 @@ if plotPairs
 end
 
 
+%% -----------------------------------------------------------------
+% Plot data y1 and smattering of posterior predictive curves:
+%-----------------------------------------------------------------
+y = [y1',y2'];
+nu = params(:,5);
+mu1 = params(:,1);
+sigma1 = params(:,2);
+mu2 = params(:,3);
+sigma2 = params(:,4);
+
+mbe_plotData(y,nu,mu1,sigma1,mu2,sigma2);
 
 
 
