@@ -1,6 +1,6 @@
-function postSummary = mbe_plotPost(paramSampleVec, varargin)
+function postSummary = mbe_plotPost(SampleVec, varargin)
 %% mbe_plotPost
-% Plotting posterior distributions with highest density interval. 
+% Plotting posterior distribution with highest density interval. 
 % 
 % INPUT:
 % paramSampleVec is a MCMC chain with n iterations.
@@ -21,7 +21,9 @@ function postSummary = mbe_plotPost(paramSampleVec, varargin)
 % EXAMPLE:
 % postSummary = mbe_plotPost(paramSampleVec,'rope',[-0.1 0.1],'credMass',0.95)
 
-% Largely based on code by Kruschke, 2011.
+% Largely based on R code by Kruschke, J. K. (2015). Doing Bayesian Data Analysis, 
+% Second Edition: A Tutorial with R, JAGS, and Stan. Academic Press / Elsevier.
+% see http://www.indiana.edu/~kruschke/BEST/ for R code
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-13
@@ -35,7 +37,7 @@ p = inputParser;
 defaultCredMass = 0.95;
 defaultCompVal = NaN;
 defaultYLab = '';
-defaultXLab = '';
+defaultXLab = '\theta';
 defaultXLim = 0;
 defaultPlotTitle = '';
 defaultShowMode = 1;
@@ -49,7 +51,7 @@ addOptional(p,'xLim',defaultXLim);
 addOptional(p,'plotTitle',defaultPlotTitle);
 addOptional(p,'showMode',defaultShowMode);
 addOptional(p,'rope',defaultRope);
-parse(p,paramSampleVec,varargin{:});
+parse(p,SampleVec,varargin{:});
 credMass = p.Results.credMass;
 compVal = p.Results.compVal;
 ylab = p.Results.ylab;
@@ -59,26 +61,26 @@ plotTitle = p.Results.plotTitle;
 showMode = p.Results.showMode;
 rope = p.Results.rope;
 if xLim == 0
-    xLim(1) = min(paramSampleVec);
-    xLim(2) = max([compVal;paramSampleVec]);
+    xLim(1) = min(SampleVec);
+    xLim(2) = max([compVal;SampleVec]);
 end
 
 %% Get statistics
 % Get mean and median
-postSummary.mean = mean(paramSampleVec);
-postSummary.median = median(paramSampleVec);
+postSummary.mean = mean(SampleVec);
+postSummary.median = median(SampleVec);
 % Get mode of continous variable using density function
-[f,xi] = ksdensity(paramSampleVec);
+[f,xi] = ksdensity(SampleVec);
 [~,I] = max(f);
 postSummary.mode = xi(I);
 % Get highest density interval
-HDI = HDIofMCMC(paramSampleVec,credMass);
+HDI = HDIofMCMC(SampleVec,credMass);
 postSummary.hdiMass = credMass;
 postSummary.hdiLow = HDI(1);
 postSummary.hdiHigh = HDI(2);
 
 %% Plot histogram
-[f,x] = hist(paramSampleVec,30);
+[f,x] = hist(SampleVec,30);
 % To make sure that histogram sums to one, normalize with f/sum(f)
 bar(x, f/sum(f),'BarWidth',0.85,'EdgeColor','None','FaceColor',[0.4 0.7 1]);
 xlim(xLim); xlabel(xlab); ylabel(ylab); title(plotTitle,'FontWeight','bold');
@@ -97,21 +99,21 @@ end
 
 %% Display comparison value
 if ~isnan(compVal)
-    pcRtCompVal = round(100 * sum(paramSampleVec > compVal)...
-        ./ length(paramSampleVec));
+    pcRtCompVal = round(100 * sum(SampleVec > compVal)...
+        ./ length(SampleVec));
     pcLtCompVal = 100 - pcRtCompVal;
     plot([compVal,compVal], [yLim,0],'Color',[0 0.5 0],'LineWidth',2);
     text(compVal, 0.75*yLim, ['cV: ' num2str(pcLtCompVal) '% < '...
         num2str(compVal) ' < ' num2str(pcRtCompVal) '%'],'Color',[0 0.5 0]);
     postSummary.compVal = compVal;
-    postSummary.pcGTcompVal = sum((paramSampleVec > compVal)...
-        ./ length(paramSampleVec));
+    postSummary.pcGTcompVal = sum((SampleVec > compVal)...
+        ./ length(SampleVec));
 end
 
 %% Display ROPE
 if rope ~= 0
-    pcInROPE = sum(paramSampleVec > rope(1) & paramSampleVec < rope(2))...
-        ./ length(paramSampleVec);
+    pcInROPE = sum(SampleVec > rope(1) & SampleVec < rope(2))...
+        ./ length(SampleVec);
     line([rope(1),rope(1)],[0,yLim],'Color','r','LineStyle','--','LineWidth',2);
     line([rope(2),rope(2)],[0,yLim],'Color','r','LineStyle','--','LineWidth',2);
     text(rope(2), 0.5*yLim,[num2str(round(100*pcInROPE)) '% in ROPE'],'Color','r');
