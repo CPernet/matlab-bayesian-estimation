@@ -11,7 +11,7 @@ function hdiLim = HDIofMCMC(sampleVec,credMass)
 %     interval that is to be estimated.
 %
 % OUTPUT:
-%   HDIlim is a vector containing the limits of the HDI
+%   hdiLim is a vector containing the limits of the HDI
 
 % Largely based on R code by Kruschke, J. K. (2015). Doing Bayesian Data Analysis, 
 % Second Edition: A Tutorial with R, JAGS, and Stan. Academic Press / Elsevier.
