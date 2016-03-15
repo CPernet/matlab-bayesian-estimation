@@ -1,5 +1,5 @@
 function summary = mbe_summary(sampleVec,varargin)
-% mbe_summary
+%% mbe_summary
 %   Computes summary statistics for one parameter of mcmc chain.
 %   Summary statistics include mean, median, mode, HDI and if a 
 %   comparison value is specified the percentage of parameter data
@@ -33,7 +33,7 @@ end
 
 summary.mean = mean(sampleVec);
 summary.median = median(sampleVec);
-% Get mode by using ksdensity (for continous variables)
+% Get mode (for continous variables) by using ksdensity 
 [f,xi] = ksdensity(sampleVec);
 [~,I] = max(f);
 summary.mode = xi(I);
@@ -44,7 +44,5 @@ summary.HDIhigh = hdiLim(2);
 if exist('compVal','var')
     summary.pcgtZero = (100*sum(sampleVec > compVal) ...
         / length(sampleVec));
-else
-    summary.pcgtZero = NaN;
 end
 end
