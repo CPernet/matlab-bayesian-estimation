@@ -23,8 +23,7 @@ function [shape,rate] = gammaShRa(centTend,sd,type)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-13
-% Changed:
-% Version: v0.2
+% Version: v1.00 (2016-03-15)
 % Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 

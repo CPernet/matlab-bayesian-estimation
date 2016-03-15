@@ -19,7 +19,7 @@ function mbe_plotPairs(params,paramNames,nPtToPlot)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-14
-% Version: v0.2 (2016-03-14)
+% Version: v1.00 (2016-03-15)
 % Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 
