@@ -106,7 +106,6 @@ mbe_plotPost(sigma1-sigma2,'xlab','\sigma1-\sigma2','PlotTitle','Difference of S
 % Macmillan & Creelman, 1991; Simpson & Fitter, 1973; Swets, 1986a, 1986b.
 effectSize = (mu1 - mu2) ./ sqrt(( sigma1.^2 + sigma2.^2 ) / 2 );
 subplot(4,2,8);
-% str = '(\mu1-\mu2)/\sqrt((\sigma1^2+\sigma2^2)/2';
 str = '(\mu1-\mu2)/sqrt((\sigma1^2+\sigma2^2)/2)';
 mbe_plotPost(effectSize,'rope',[-0.1,0.1],'xlab',str,'PlotTitle','Effect Size');
 
