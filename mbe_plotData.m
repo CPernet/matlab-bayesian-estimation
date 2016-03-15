@@ -5,8 +5,7 @@ function mbe_plotData(y,nu,mu1,sigma1,mu2,sigma2)
 %
 % INPUT:
 %   y
-%       column vector of observed data
-%       or matrix of observed data ([y1,y2])
+%       cell array containing column vectors of observed data
 %   showPost
 %       superimpose posterior predictive check ([1],0)
 %   mu
@@ -30,13 +29,13 @@ function mbe_plotData(y,nu,mu1,sigma1,mu2,sigma2)
 
 % Error checking and input handling
 if size(y,2) < 2
-    y1 = y;
+    y1 = y{1,1};
     minX = min(y1);
     maxX = max(y1);
     meanSigma = mean(sigma1);
 elseif size(y,2) == 2
-    y1 = y(:,1);
-    y2 = y(:,2);
+    y1 = y{1}(:);
+    y2 = y{2}(:);
     minX = min([y1;y2]);
     maxX = max([y1;y2]);
     if ~exist('mu2','var') || ~exist('sigma2','var')
