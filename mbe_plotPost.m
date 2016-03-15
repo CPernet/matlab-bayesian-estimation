@@ -116,7 +116,7 @@ if rope ~= 0
         ./ length(SampleVec);
     line([rope(1),rope(1)],[0,yLim],'Color','r','LineStyle','--','LineWidth',2);
     line([rope(2),rope(2)],[0,yLim],'Color','r','LineStyle','--','LineWidth',2);
-    text(rope(2), 0.5*yLim,[num2str(round(100*pcInROPE)) '% in ROPE'],'Color','r');
+    text(rope(2), 0.65*yLim,[num2str(round(100*pcInROPE)) '% in ROPE'],'Color','r');
     postSummary.ROPElow = rope(1);
     postSummary.ROPEhigh = rope(2);
     postSummary.pcInROPE = pcInROPE;
