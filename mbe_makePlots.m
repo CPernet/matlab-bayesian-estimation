@@ -1,11 +1,11 @@
-function mbe_makePlots(data, mcmcChain, varargin)
+function mbe_makePlots(y, mcmcChain, varargin)
 % mbe_makePlots
 %   Make histogram of data with superimposed posterior prediction check
 %   and plots posterior distribution of monitored parameters.
 %
 % INPUT:
-%   data
-%       vector or matrix of data variables ([y1,y2])
+%   y
+%       cell array containing vectors for y1 and y2
 %   mcmcChain
 %       structure with one MCMC-chain, should contain all monitored parameters
 %
@@ -32,7 +32,7 @@ function mbe_makePlots(data, mcmcChain, varargin)
 p = inputParser;
 defaultPlotPairs = 1;
 addOptional(p,'plotPairs',defaultPlotPairs);
-parse(p,data,mcmcChain,varargin{:});
+parse(p,varargin{:});
 plotPairs = p.Results.plotPairs;
 
 % Get parameters
@@ -58,11 +58,10 @@ end
 %% -----------------------------------------------------------------
 % Plot data y and smattering of posterior predictive curves:
 %-----------------------------------------------------------------
-y = [y1',y2'];
 nu = params(:,5);
 mu1 = params(:,1);
-sigma1 = params(:,2);
-mu2 = params(:,3);
+mu2 = params(:,2);
+sigma1 = params(:,3);
 sigma2 = params(:,4);
 
 mbe_plotData(y,nu,mu1,sigma1,mu2,sigma2);
