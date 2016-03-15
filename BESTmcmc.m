@@ -145,7 +145,7 @@ end
 end
 
 %% PLOTS
-BESTplot(y1,y2,structArray,0,0,... 
+BESTplot(y1',y2',structArray,0,0,... 
                     0,0,1);
 
 plot(1:151,muDiffERP)
