@@ -90,10 +90,10 @@ hold on;
 %% Display mean or mode
 if showMode == 0
     meanParam = postSummary.mean;
-    text(meanParam,yLim,['mean = ' num2str(meanParam,'%.2f')]);
+    text(meanParam,yLim,['mean = ' num2str(meanParam,'%.4f')]);
 else
     modeParam = postSummary.mode;
-    text(modeParam,yLim,['mode = ' num2str(modeParam,'%.2f')]);
+    text(modeParam,yLim,['mode = ' num2str(modeParam,'%.4f')]);
 end
 
 %% Display comparison value
@@ -123,8 +123,8 @@ end
 
 %% Display HDI
 line(HDI,[0,0],'Color','k','LineWidth',5)
-text(HDI(1),yLim*0.4, num2str(HDI(1),'%.2f'));
-text(HDI(2),yLim*0.4, num2str(HDI(2),'%.2f'));
+text(HDI(1),yLim*0.4, num2str(HDI(1),'%.4f'));
+text(HDI(2),yLim*0.4, num2str(HDI(2),'%.4f'));
 
 %% Change font size
 set(gca,'FontSize',8);
