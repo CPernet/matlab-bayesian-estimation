@@ -4,10 +4,8 @@ function mbe_acfPlot(mcmcParam)
 %
 % INPUT:
 %   mcmcParam
-%       cell array containing chain as vectors
+%       2d matrix with MCMC parameter as column vector for every chain
 %
-%   name
-%       string specifying parameter
 % EXAMPLE:
 %   mbe_acfPlot(mcmcChain);
 
@@ -17,22 +15,23 @@ function mbe_acfPlot(mcmcParam)
 % Version: v1.1(2016-03-16)
 % Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
-nChain = numel(mcmcParam);
+nChain = size(mcmcParam,2);
+cc='rgbcy';
 for indChain = 1:nChain
     nLags = 200;
     % This function is from file exchange, since autocorr.m comes only with
     % the Econometrics Toolbox
-    acfInfo = nanautocorr(mcmcParam{indChain},nLags);
+    acfInfo = nanautocorr(mcmcParam(:,indChain),nLags);
     xMat(:,indChain) = 1:nLags+1;
     yMat(:,indChain) = acfInfo;
-    plot(xMat(:,indChain),yMat(:,indChain));
+    plot(xMat(:,indChain),yMat(:,indChain),'Color',cc(indChain));
     hold on;
 end
 % Make it nicer
 ylim([-0.1 1]); xlim([-5 nLags]);
 ylabel('Autocorrelation'); xlabel('Lag');
 % Plot reference line
-plot(-5:nLags,zeros(nLags+6),'LineStyle','--','color','k');
+plot(-5:nLags,zeros(nLags+6),'LineStyle',':','color','k');
 % % Display effective chain length
 % effChainLength = mbe_effectiveSize(mcmcChain);
 % dim = [.6 .5 .3 .3];

@@ -4,7 +4,7 @@ function mbe_tracePlot(mcmcParam)
 %
 % INPUT:
 %   mcmcParam
-%       cell array containing chain as vectors
+%       2d matrix with MCMC parameter as column vector for every chain
 %
 % EXAMPLE:
 
@@ -15,12 +15,12 @@ function mbe_tracePlot(mcmcParam)
 % Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 
-nChain = numel(mcmcParam);
-nSteps = length(mcmcParam{1}(:));
+nChain = size(mcmcParam,2);
+nSteps = size(mcmcParam,1);
 X = 1:nSteps;
-cc='rgb';
+cc='rgbcy';
 for indChain = 1:nChain
-    Y = mcmcParam{indChain}(:);
+    Y = mcmcParam(:,indChain);
     plot(X,Y,'color',cc(indChain));
     ylabel('Param. Value'); xlabel('Iterations');
     box on;
