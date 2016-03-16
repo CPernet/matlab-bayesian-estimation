@@ -95,7 +95,14 @@ for stepIdx = 2:length(stepIdxVec)
 end
 
 % Plot histogram of data y1
-[f,x] = hist(y1,20);
+% check for number of data points and adjust number of bins accordingly
+nData = numel(y1);
+if nData < 20
+    nBins = nData/2;
+else
+    nBins = 20;
+end
+[f,x] = hist(y1,nBins);
 bar(x, f/sum(f)/(x(2)-x(1)),'r','BarWidth',0.6,'EdgeColor','None');
 hold off
 
@@ -119,7 +126,14 @@ if exist('y2','var')
     end
     
     % Plot histogram of data y2
-    [f,x] = hist(y2,20);
+    % check for number of data points and adjust number of bins accordingly
+    nData = numel(y2);
+    if nData < 20
+        nBins = nData/2;
+    else
+        nBins = 20;
+    end
+    [f,x] = hist(y2,nBins);
     bar(x,f/sum(f)/(x(2)-x(1)),'r','BarWidth',0.6,'EdgeColor','None');
     hold off
 end
