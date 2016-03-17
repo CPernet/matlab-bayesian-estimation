@@ -53,7 +53,12 @@ for indParam = 1:numel(paramNames)
     
     % Plot autocorrelation of parameters
     subplot(2,2,2);
-    mbe_acfPlot(squeeze(params(:,indParam,:)));     
+    mbe_acfPlot(squeeze(params(:,indParam,:)));  
+    [~,~,ESS(indParam)] = eacorr(squeeze(params(:,indParam)));
+     dim = [.7 .5 .3 .3];
+    str = ['ESS: ' num2str(ESS(indParam),'%.0f')];
+    annotation('textbox',dim,'String',str,'FitBoxToText','on');
+    
 end
 
 
