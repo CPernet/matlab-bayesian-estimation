@@ -47,6 +47,7 @@ for indParam = 1:numel(paramNames)
     str = ['Chain Diagnostics for: ' paramNames{indParam}];
     a = annotation('textbox',dim,'String',str,'FitBoxToText','on');
     set(a,'FontSize',14,'FontWeight','bold');
+    
     % Plot trace of parameter
     subplot(2,2,1);
     mbe_tracePlot(squeeze(params(:,indParam,:)));
@@ -54,11 +55,12 @@ for indParam = 1:numel(paramNames)
     % Plot autocorrelation of parameters
     subplot(2,2,2);
     mbe_acfPlot(squeeze(params(:,indParam,:)));  
-    [~,~,ESS(indParam)] = eacorr(squeeze(params(:,indParam)));
-     dim = [.7 .5 .3 .3];
-    str = ['ESS: ' num2str(ESS(indParam),'%.0f')];
-    annotation('textbox',dim,'String',str,'FitBoxToText','on');
     
+    % Plot density
+    subplot(2,2,4);
+    mbe_mcmcDensPlot(squeeze(params(:,indParam,:)))
+    
+end
 end
 
 

@@ -115,8 +115,8 @@ model = fullfile(pwd,'mbe_2gr_example.txt');
     'verbosity',1,...
     'nSamples',numSavedSteps);
 
-%% Examine the chains individually - NEEDS TO BE IMPLEMENTED
-
+%% Examine the chains individually 
+mbe_diagMCMC(mcmcChain);
 %% Examine the results
 % Concatenate individual chains to one long chain first
 mcmcChain = mbe_concChains(mcmcChain);
