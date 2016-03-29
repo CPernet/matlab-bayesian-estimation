@@ -25,8 +25,9 @@ for indChain = 1:nChain
     plot([hdiLim(1) hdiLim(1)],[0 0.1],'Color',cc(indChain));
     plot([hdiLim(2) hdiLim(2)],[0 0.1],'Color',cc(indChain));
 end
-xlabel('Param. Value'); ylabel('Density');
-text(mean(hdiLim(:)),0.1,'95% HDI');
+xlabel('Param. Value','FontWeight','bold','fontSize',12);
+ylabel('Density','FontWeight','bold','fontSize',12);
+text(mean(hdiLim(:)),0.1,'95% HDI','HorizontalAlignment','center');
 
 % Display MCSE
 [~,neff,~,~,~,~,~] = psrf(mcmcParam);

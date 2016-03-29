@@ -32,8 +32,12 @@ R = zeros(nSteps-499,1);
 for indSteps = 500:nSteps
     R(indSteps-499) = psrf(X(1:indSteps,:,:));
 end
+
+% Plot evolution of shrink factor
 plot(500:nSteps,R);
-xlabel('last iteration in chain'); ylabel('shrink factor');
+xlabel('last iteration in chain','FontWeight','bold','fontSize',12); 
+ylabel('shrink factor','FontWeight','bold','fontSize',12);
 hold on;
 plot(1:nSteps,ones(nSteps,1),'Color','k','LineStyle',':');
+
 

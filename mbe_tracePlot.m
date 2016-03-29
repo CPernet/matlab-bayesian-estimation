@@ -22,7 +22,8 @@ cc='rgbcy';
 for indChain = 1:nChain
     Y = mcmcParam(:,indChain);
     plot(X,Y,'color',cc(indChain));
-    ylabel('Param. Value'); xlabel('Iterations');
+    ylabel('Param. Value','FontWeight','bold','fontSize',12); 
+    xlabel('Iterations','FontWeight','bold','fontSize',12);
     box on;
     hold on;
 end

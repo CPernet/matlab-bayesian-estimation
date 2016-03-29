@@ -43,10 +43,6 @@ end
 for indParam = 1:numel(paramNames)
     % Make one figure for every parameter
     figure('NumberTitle','Off','Color','w','Position',[100,50,800,600]);
-    dim = [.35 .7 .3 .3];
-    str = ['Chain Diagnostics for: ' paramNames{indParam}];
-    a = annotation('textbox',dim,'String',str,'FitBoxToText','on');
-    set(a,'FontSize',14,'FontWeight','bold');
     
     % Plot trace of parameter
     subplot(2,2,1);
@@ -60,6 +56,16 @@ for indParam = 1:numel(paramNames)
     subplot(2,2,4);
     mbe_mcmcDensPlot(squeeze(params(:,indParam,:)))
     
+    % Plot evolution of shrinkage factor
+    subplot(2,2,3);
+    mbe_gelmanPlot(squeeze(params(:,indParam,:)));
+    
+    % Title
+    dim = [.35 .7 .3 .3];
+    str = ['Chain Diagnostics for: ' paramNames{indParam}];
+    a = annotation('textbox',dim,'String',str,'FitBoxToText','on',...
+        'EdgeColor','None');
+    set(a,'FontSize',14,'FontWeight','bold');
 end
 end
 

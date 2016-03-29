@@ -27,7 +27,8 @@ for indChain = 1:nChain
 end
 % Make it nicer
 ylim([-0.1 1]); xlim([-5 nLags]);
-ylabel('Autocorrelation'); xlabel('Lag');
+ylabel('Autocorrelation','FontWeight','bold','fontSize',12);
+xlabel('Lag','FontWeight','bold','fontSize',12);
 % Plot reference line
 plot(-5:nLags,zeros(nLags+6),'LineStyle',':','color','k');
 
