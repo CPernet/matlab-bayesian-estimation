@@ -26,7 +26,6 @@ function summary = mbe_diagTc(mcmcChainTc)
 mcmcChainTc = mbe_restructChains(mcmcChainTc);
 names = fieldnames(mcmcChainTc{1});
 nTime = numel(mcmcChainTc);
-summary = cell(nTime,1);
 for indTime = 1:nTime
     for indParam = 1:numel(names)
         [Rhat, neff] = psrf(mcmcChainTc{indTime}.(names{indParam}));
