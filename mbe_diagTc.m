@@ -23,7 +23,7 @@ function summary = mbe_diagTc(mcmcChainTc)
 %-------------------------------------------------------------------------
 
 %% Make summary
-mcmcChainTc = mbe_restructChains(mcmcChain);
+mcmcChainTc = mbe_restructChains(mcmcChainTc);
 names = fieldnames(mcmcChainTc{1});
 nTime = numel(mcmcChainTc);
 summary = cell(nTime,1);
