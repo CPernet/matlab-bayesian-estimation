@@ -48,7 +48,7 @@ end
 for indParam = 1:numel(names)
     figure('NumberTitle','Off','Color','w','Position',[100,50,800,600]);
     dim = [.35 .7 .3 .3];
-    str = ['Chain Diagnostics (Time Course) for: ' paramNames{indParam}];
+    str = ['Chain Diagnostics (Time Course) for: ' names{indParam}];
     a = annotation('textbox',dim,'String',str,'FitBoxToText','on',...
         'EdgeColor','None');
     set(a,'FontSize',14,'FontWeight','bold');
