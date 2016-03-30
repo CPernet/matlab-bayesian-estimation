@@ -17,9 +17,7 @@ function mbe_gelmanPlot(mcmcParam)
 %-------------------------------------------------------------------------
 nChains = size(mcmcParam,2);
 % Shrink factor only works for more than one chain
-if nChains == 1
-    fprintf('More than one chain is needed to compute the shrink factor')
-else
+if nChains > 1
     % Create right format for psrf.m
     for indChain = 1:nChains
         X(:,1,indChain) = mcmcParam(:,indChain);
