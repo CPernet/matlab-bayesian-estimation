@@ -26,15 +26,22 @@ function summary = mbe_diagTc(mcmcChainTc)
 mcmcChainTc = mbe_restructChains(mcmcChainTc);
 names = fieldnames(mcmcChainTc{1});
 nTime = numel(mcmcChainTc);
-for indTime = 1:nTime
-    for indParam = 1:numel(names)
-        [Rhat, neff] = psrf(mcmcChainTc{indTime}.(names{indParam}));
-        MCSE = std(mcmcChainTc{indTime}.(names{indParam}))...
-            /sqrt(sum(neff(:)));
-        summary.(names{indParam}).ESS(indTime) = neff;
-        summary.(names{indParam}).MCSE(indTime) = MCSE;
-        summary.(names{indParam}).Rhat(indTime) = Rhat;
+
+% Prepare for psrf function
+for indParam = 1:numel(names)
+    for indTime = 1:nTime
+        X.(names{indParam})(:,indTime) = mcmcChainTc{indTime}.(names{indParam});
     end
+end
+
+% calculate ESS, MCSE, Rhat
+for indParam = 1:numel(names)
+    [Rhat, neff] = psrf(X.(names{indParam}));
+    MCSE = std(X.(names{indParam}))...
+        /sqrt(neff);
+    summary.(names{indParam}).ESS = neff;
+    summary.(names{indParam}).MCSE = MCSE;
+    summary.(names{indParam}).Rhat = Rhat;
 end
 
 %% Make plots
