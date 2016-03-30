@@ -38,7 +38,7 @@ end
 for indParam = 1:numel(names)
     [Rhat, neff] = psrf(X.(names{indParam}));
     MCSE = std(X.(names{indParam}))...
-        /sqrt(neff);
+        ./sqrt(neff);
     summary.(names{indParam}).ESS = neff;
     summary.(names{indParam}).MCSE = MCSE;
     summary.(names{indParam}).Rhat = Rhat;
