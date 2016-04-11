@@ -1,7 +1,9 @@
 function summary = mbe_diagTc(mcmcChainTc)
 %% mbe_diagTc
 %  Compute diagnostics for MCMC time course analysis (i.e. EEG ERP time
-%  courses, one MCMC chain for every time step).
+%  courses, one MCMC chain for every time step). Depending on the length of
+%  the chain, this function needs 1 to a couple of seconds for every time
+%  step and is therefore very slow.
 %
 % INPUT:
 %   mcmcChainTc

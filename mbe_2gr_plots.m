@@ -84,7 +84,7 @@ mbe_plotPost(mu1,'xlab','\mu1','xlim',xLim,'Plottitle','Group 1 Mean');
 subplot(4,2,3);
 mbe_plotPost(mu2,'xlab','\mu2','xlim',xLim,'PlotTitle','Group 2 Mean');
 subplot(4,2,5);
-mbe_plotPost(mu1-mu2,'xlab','\mu1-\mu2','PlotTitle','Difference of Means');
+mbe_plotPost(mu1-mu2,'xlab','\mu1-\mu2','PlotTitle','Difference of Means','CompVal',0);
 
 
 %-----------------------------------------------------------------
