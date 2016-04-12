@@ -21,17 +21,20 @@ function mcmcInfo = mbe_diagMCMC(mcmcChain)
 % Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 
+%% Get parameters
+% make it a MxNxP-matrix (M=steps,N=parameters,P=chains)
+names = fieldnames(mcmcChain);
+
+
 %% Check if input is only one mcmc simulation (with multiple chains)
-if size(mcmcChain,3) > 1
-    t = uiwait(inputdlg('Which time step do you want to diagnose?'));
-    if t > size(mcmcChain,3
+t = 1;
+if size(mcmcChain.(names{1}),3) > 1
+    t = inputdlg('Which time step do you want to diagnose?');
+    t = str2num(t{1});
+    if t > size(mcmcChain.(names{1}),3)
         error('The time step you specified is not valid.')
     end
 end
-
-%% Get parameters
-% make it a MxNxP-matrix (M=steps,N=parameters,P=chains)
-names = fieldnames(mcmcChain(1));
 
 %% Loop through every parameter and create diagnostic plots
 for indParam = 1:numel(names)
@@ -40,19 +43,19 @@ for indParam = 1:numel(names)
     
     % Plot trace of parameter
     subplot(2,2,1);
-    mbe_tracePlot(squeeze(mcmcChain.(names{indParam})));
+    mbe_tracePlot(squeeze(mcmcChain.(names{indParam})(:,:,t)));
     
     % Plot autocorrelation of parameters
     subplot(2,2,2);
-    mbe_acfPlot(squeeze(mcmcChain.(names{indParam})));  
+    mbe_acfPlot(squeeze(mcmcChain.(names{indParam})(:,:,t)));  
     
     % Plot density
     subplot(2,2,4);
-    mbe_mcmcDensPlot(squeeze(mcmcChain.(names{indParam})));
+    mbe_mcmcDensPlot(squeeze(mcmcChain.(names{indParam})(:,:,t)));
     
     % Plot evolution of shrinkage factor
     subplot(2,2,3);
-    mbe_gelmanPlot(squeeze(mcmcChain.(names{indParam})));
+    mbe_gelmanPlot(squeeze(mcmcChain.(names{indParam})(:,:,t)));
     
     % Title
     dim = [.35 .7 .3 .3];
