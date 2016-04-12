@@ -7,13 +7,21 @@ function mbe_acfPlot(mcmcParam)
 %       2d matrix with MCMC parameter as column vector for every chain
 %
 % EXAMPLE:
-%   mbe_acfPlot(mcmcChain);
+%   mbe_acfPlot(mcmcChain.mu1);
 
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-16
 % Version: v1.1(2016-03-16)
 %-------------------------------------------------------------------------
+%% Checking input
+if size(size(mcmcParam),2) > 2
+    error(['Your mcmc input has three dimensions, which suggests a time '...
+        'series analysis. The autocorrelation plot works only for one time '...
+        'point/mcmc simulation with multiple chains.']);
+end
+
+%% Plot autocorrelation
 nChain = size(mcmcParam,2);
 cc='rgbcy';
 for indChain = 1:nChain
