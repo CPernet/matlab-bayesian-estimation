@@ -35,34 +35,26 @@ addOptional(p,'plotPairs',defaultPlotPairs);
 parse(p,varargin{:});
 plotPairs = p.Results.plotPairs;
 
-% Get parameters
+% Get parameter names
 names = fieldnames(mcmcChain);
-paramNames = {};
-params = [];
-for indFields = 1:(numel(names)-1)  % -1 to skip 'deviance' parameter
-    for indParam = 1:size(mcmcChain.(names{indFields}),2)
-        params = [params,mcmcChain.(names{indFields})(:,indParam)];
-        paramNames{end+1} = [names{indFields} num2str(indParam)];
-    end
-end
 
 
 %% -----------------------------------------------------------------
 % Plot correlations between parameters
 %-----------------------------------------------------------------
 if plotPairs
-    mbe_plotPairs(params,paramNames,1000)
+    mbe_plotPairs(mcmcChain,1000)
 end
 
 
 %% -----------------------------------------------------------------
 % Plot data y and smattering of posterior predictive curves:
 %-----------------------------------------------------------------
-nu = params(:,5);
-mu1 = params(:,1);
-mu2 = params(:,2);
-sigma1 = params(:,3);
-sigma2 = params(:,4);
+nu = mcmcChain.(names{5});
+mu1 = mcmcChain.(names{1});
+mu2 = mcmcChain.(names{2});
+sigma1 = mcmcChain.(names{3});
+sigma2 = mcmcChain.(names{4});
 
 mbe_plotData(y,nu,mu1,sigma1,mu2,sigma2);
 

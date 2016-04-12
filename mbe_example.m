@@ -62,7 +62,7 @@ nChains = 3;
 % Number of steps that are thinned, matjags will only keep every nth step
 % This does not affect the number of saved steps. I.e. in order to compute
 % 10000 saved steps, matjags/JAGS will compute 50000 steps
-thinSteps = 5;
+thinSteps = 1;
 
 % Number of burn-in samples
 burnInSteps = 1000;
@@ -115,13 +115,16 @@ model = fullfile(pwd,'mbe_2gr_example.txt');
     'verbosity',2,...
     'nSamples',numSavedSteps);
 
+%% Restructure the output
+mcmcChain = mbe_restructChains(mcmcChain);
+
 %% Examine the chains 
 mbe_diagMCMC(mcmcChain);
+summary = mbe_summary(mcmcChain);
 
 %% Examine the results
 % Concatenate individual chains to one long chain first
 mcmcChain = mbe_concChains(mcmcChain);
-summary = mbe_2gr_summary(mcmcChain);
 data{1} = y1;
 data{2} = y2;
 mbe_2gr_plots(data,mcmcChain);
