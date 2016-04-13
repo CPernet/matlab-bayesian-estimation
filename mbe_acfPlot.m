@@ -27,8 +27,8 @@ cc='rgbcy';
 for indChain = 1:nChain
     nLags = 200;
     % This function is from file exchange
-    acfInfo = nanautocorr(mcmcParam(:,indChain),nLags);
-    xMat(:,indChain) = 1:nLags+1;
+    acfInfo = acorr(mcmcParam(:,indChain),nLags);
+    xMat(:,indChain) = 1:nLags;
     yMat(:,indChain) = acfInfo;
     plot(xMat(:,indChain),yMat(:,indChain),'Color',cc(indChain));
     hold on;
