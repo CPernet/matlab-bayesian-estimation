@@ -13,7 +13,7 @@ function mbe_mcmcDensPlot(mcmcParam)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-22
-% Version: v1.1
+% Version: v2.00 (2016-04-13)
 %-------------------------------------------------------------------------
 nChain = size(mcmcParam,2);
 cc='rgbcy';

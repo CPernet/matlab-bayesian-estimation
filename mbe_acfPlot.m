@@ -12,7 +12,7 @@ function mbe_acfPlot(mcmcParam)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-16
-% Version: v1.1(2016-03-16)
+% Version: v2.00 (2016-04-13)
 %-------------------------------------------------------------------------
 %% Checking input
 if size(size(mcmcParam),2) > 2

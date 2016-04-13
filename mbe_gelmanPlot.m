@@ -13,7 +13,7 @@ function mbe_gelmanPlot(mcmcParam)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-22
-% Version: v1.1
+% Version: v2.00 (2016-04-13)
 %-------------------------------------------------------------------------
 nChains = size(mcmcParam,2);
 % Shrink factor only works for more than one chain

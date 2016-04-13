@@ -23,7 +23,7 @@ function summary = mbe_summary(mcmcChain,varargin)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-15
-% Version: v1.2 (2016-04-12)
+% Version: v2.00 (2016-04-13)
 % Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 
