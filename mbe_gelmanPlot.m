@@ -25,13 +25,15 @@ if nChains > 1
     
     % Calculate shrink factor for increasing number of steps to see evolution
     nSteps = size(X,1);
-    R = zeros(nSteps-499,1);
-    for indSteps = 500:nSteps
-        R(indSteps-499) = psrf(X(1:indSteps,:,:));
+    maxBins = 50;
+    binSize = floor((nSteps-50) / maxBins);
+    R = [];
+    for indSteps = 50:binSize:nSteps
+       R(end+1) = psrf(X(1:indSteps,:,:));
     end
     
     % Plot evolution of shrink factor
-    plot(500:nSteps,R);
+    plot(50:binSize:nSteps,R);
     xlabel('last iteration in chain','FontWeight','bold','fontSize',12);
     ylabel('shrink factor','FontWeight','bold','fontSize',12);
     hold on;
