@@ -42,9 +42,9 @@ nuPriorMean = 30;
 nuPriorSD = 30;
 
 % Now get shape and rate for gamma distribution
-[Sh1, Ra1] = gammaShRa(sigma1PriorMode,sigma1PriorSD,'mode');
-[Sh2, Ra2] = gammaShRa(sigma2PriorMode,sigma2PriorSD,'mode');
-[ShNu, RaNu] = gammaShRa(nuPriorMean,nuPriorSD,'mean');
+[Sh1, Ra1] = mbe_gammaShRa(sigma1PriorMode,sigma1PriorSD,'mode');
+[Sh2, Ra2] = mbe_gammaShRa(sigma2PriorMode,sigma2PriorSD,'mode');
+[ShNu, RaNu] = mbe_gammaShRa(nuPriorMean,nuPriorSD,'mean');
 
 % Save prior constants in a structure for later use with matjags
 dataList = struct('y',y,'x',x,'nTotal',nTotal,...
@@ -118,7 +118,7 @@ model = fullfile(pwd,'mbe_2gr_example.txt');
 %% Restructure the output
 mcmcChain = mbe_restructChains(mcmcChain);
 
-%% Examine the chains 
+%% Examine the chains
 mbe_diagMCMC(mcmcChain);
 summary = mbe_summary(mcmcChain);
 
@@ -128,11 +128,3 @@ mcmcChain = mbe_concChains(mcmcChain);
 data{1} = y1;
 data{2} = y2;
 mbe_2gr_plots(data,mcmcChain);
-
-
-
-
-
-
-
-

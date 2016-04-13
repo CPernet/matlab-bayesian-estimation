@@ -73,7 +73,7 @@ postSummary.median = median(SampleVec);
 [~,I] = max(f);
 postSummary.mode = xi(I);
 % Get highest density interval
-HDI = HDIofMCMC(SampleVec,credMass);
+HDI = mbe_hdi(SampleVec,credMass);
 postSummary.hdiMass = credMass;
 postSummary.hdiLow = HDI(1);
 postSummary.hdiHigh = HDI(2);

@@ -21,7 +21,7 @@ for indChain = 1:nChain
     [F,XI] = ksdensity(mcmcParam(:,indChain));
     plot(XI,F,'Color',cc(indChain));
     hold on;
-    hdiLim = HDIofMCMC(mcmcParam(:,indChain),.95);
+    hdiLim = mbe_hdi(mcmcParam(:,indChain),.95);
     plot([hdiLim(1) hdiLim(1)],[0 0.1],'Color',cc(indChain));
     plot([hdiLim(2) hdiLim(2)],[0 0.1],'Color',cc(indChain));
 end

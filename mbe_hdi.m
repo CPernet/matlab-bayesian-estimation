@@ -1,5 +1,5 @@
-function hdiLim = HDIofMCMC(sampleVec,credMass)
-%% HDIofMCMC
+function hdiLim = mbe_hdi(sampleVec,credMass)
+%% mbe_hdi
 % Computes highest density interval from a sample of representative values,
 %   estimated as shortest credible interval.
 %

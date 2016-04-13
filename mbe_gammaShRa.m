@@ -1,5 +1,5 @@
-function [shape,rate] = gammaShRa(centTend,sd,type)
-% gammaShRa
+function [shape,rate] = mbe_gammaShRa(centTend,sd,type)
+%% mbe_gammaShRa
 %   Calculates shape and rate for gamma distribution.
 %
 % INPUT:
@@ -15,7 +15,7 @@ function [shape,rate] = gammaShRa(centTend,sd,type)
 %   vector containing shape and rate for gamma distribution
 %
 % EXAMPLE:
-%   [shape,rate] = gammaShRa(centTend,sd,'mode');
+%   [shape,rate] = mbe_gammaShRa(centTend,sd,'mode');
 
 % Largely based on R code by Kruschke, J. K. (2015). Doing Bayesian Data Analysis,
 % Second Edition: A Tutorial with R, JAGS, and Stan. Academic Press / Elsevier.

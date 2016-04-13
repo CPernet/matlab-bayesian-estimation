@@ -43,9 +43,9 @@ nuPriorMean = 30;
 nuPriorSD = 30;
 
 % Now get shape and rate for gamma distribution
-[Sh1, Ra1] = gammaShRa(sigma1PriorMode,sigma1PriorSD,'mode');
-[Sh2, Ra2] = gammaShRa(sigma2PriorMode,sigma2PriorSD,'mode');
-[ShNu, RaNu] = gammaShRa(nuPriorMean,nuPriorSD,'mean');
+[Sh1, Ra1] = mbe_gammaShRa(sigma1PriorMode,sigma1PriorSD,'mode');
+[Sh2, Ra2] = mbe_gammaShRa(sigma2PriorMode,sigma2PriorSD,'mode');
+[ShNu, RaNu] = mbe_gammaShRa(nuPriorMean,nuPriorSD,'mean');
 
 % Save prior constants in a structure for later use with matjags
 dataList = struct('y',y,'x',x,'nTotal',nTotal,...
@@ -142,7 +142,7 @@ These are examples of the figures that can be created to show the posterior dist
 
 ## Installation
 
-The MBE toolbox uses the open source software **JAGS** (Just Another Gibbs Sampler) to conduct Markov-Chain-Monte-Carlo sampling. Instead of using Rjags (as you would when using Kruschke's code), MBE uses the Matlab-JAGS interface **matjags.m** that will communicate with JAGS and import the results back to Matlab. 
+The MBE toolbox uses the open source software **JAGS** (Just Another Gibbs Sampler) to conduct Markov-Chain-Monte-Carlo sampling. Instead of using Rjags (as you would when using Kruschke's code), MBE uses the Matlab-JAGS interface **matjags.m** that will communicate with JAGS and import the results back to Matlab.
 
 **JAGS** can be downloaded here:
 http://mcmc-jags.sourceforge.net/
@@ -160,7 +160,7 @@ The MBE Toolbox uses additional functions obtained via Matlab's File Exchange. T
 
 Kruschke, J. K. (2013). Bayesian estimation supersedes the t test. Journal of Experimental Psychology: General, 142(2), 573.
 
-Kruschke, J. K. (2014). Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and STAN (2nd ed.). Amsterdam: Academic Press. 
+Kruschke, J. K. (2014). Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and STAN (2nd ed.). Amsterdam: Academic Press.
 
 
 ## License
