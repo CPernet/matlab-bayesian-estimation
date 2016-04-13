@@ -43,7 +43,7 @@ for indPar = 1:numel(names)
             [f,xi] = ksdensity(mcmcChain.(names{indPar})(:,indChain,indTime));
             [~,I] = max(f);
             summary.(names{indPar}).mode(indChain,indTime) = xi(I);
-            hdiLim = HDIofMCMC(mcmcChain.(names{indPar})(:,indChain,indTime),0.95);
+            hdiLim = mbe_hdi(mcmcChain.(names{indPar})(:,indChain,indTime),0.95);
             summary.(names{indPar}).HDIlow(indChain,indTime) = hdiLim(1);
             summary.(names{indPar}).HDIhigh(indChain,indTime) = hdiLim(2);
             if exist('compVal','var')
