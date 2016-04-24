@@ -123,8 +123,8 @@ end
 
 %% Display HDI
 line(HDI,[0,0],'Color','k','LineWidth',5)
-text(HDI(1),yLim*0.4, num2str(HDI(1),'%.4f'));
-text(HDI(2),yLim*0.4, num2str(HDI(2),'%.4f'));
+text(HDI(1),yLim*0.3, num2str(HDI(1),'%.3f'),'HorizontalAlignment','center');
+text(HDI(2),yLim*0.3, num2str(HDI(2),'%.3f'),'HorizontalAlignment','center');
 
 %% Change font size and hide y-axis
 set(gca,'FontSize',8);
