@@ -7,8 +7,6 @@ function summary = mbe_2gr_summary(mcmcChain)
 % INPUT:
 %   mcmcChain
 %       structure with fields for mu, sigma, nu
-%       mu and sigma need to have size m x n with m = number of chain steps
-%       and n = 2 (for mu1 and mu2 and sigma1 and sigma2)
 %
 % OUTPUT:
 %   summary
@@ -24,21 +22,20 @@ function summary = mbe_2gr_summary(mcmcChain)
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-13
-% Version: v1.00 (2016-03-15)
-% Matlab 8.1.0.604 (R2013a) on PCWIN
+% Version: v1.2 (2016-04-24)
 %-------------------------------------------------------------------------
 
-summary.mu1 = mbe_summary(mcmcChain.mu(:,1));
-summary.mu2 = mbe_summary(mcmcChain.mu(:,2));
-summary.muDiff = mbe_summary((mcmcChain.mu(:,1) - mcmcChain.mu(:,2)),0);
-summary.sigma1 = mbe_summary(mcmcChain.sigma(:,1));
-summary.sigma2 = mbe_summary(mcmcChain.sigma(:,2));
-summary.sigmaDiff = mbe_summary((mcmcChain.sigma(:,1) - mcmcChain.sigma(:,2)),0);
-summary.nu = mbe_summary(mcmcChain.nu);
-summary.nuLog10 = mbe_summary(log10(mcmcChain.nu));
+summary.mu1 = mbe_summary(mcmcChain.mu1);
+summary.mu2 = mbe_summary(mcmcChain.mu2);
+summary.muDiff = mbe_summary((mcmcChain.mu1 - mcmcChain.mu2),0);
+summary.sigma1 = mbe_summary(mcmcChain.sigma1);
+summary.sigma2 = mbe_summary(mcmcChain.sigma2);
+summary.sigmaDiff = mbe_summary((mcmcChain.sigma1 - mcmcChain.sigma2),0);
+summary.nu = mbe_summary(mcmcChain.nu1);
+summary.nuLog10 = mbe_summary(log10(mcmcChain.nu1));
 
-effSzChain = ((mcmcChain.mu(:,1)-mcmcChain.mu(:,2))...
-    ./ sqrt((mcmcChain.sigma(:,1).^2) + mcmcChain.sigma(:,2).^2)/2); %NEEDS TO BE CHECKED FOR MISTAKES
+effSzChain = ((mcmcChain.mu1-mcmcChain.mu2)...
+    ./ sqrt((mcmcChain.sigma1.^2) + mcmcChain.sigma2.^2)/2); %NEEDS TO BE CHECKED FOR MISTAKES
 summary.effSz = mbe_summary(effSzChain,0);
 
 % n1 = length(y1);    % for sample-size weighted version only
