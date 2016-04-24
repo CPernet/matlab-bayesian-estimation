@@ -126,8 +126,10 @@ line(HDI,[0,0],'Color','k','LineWidth',5)
 text(HDI(1),yLim*0.4, num2str(HDI(1),'%.4f'));
 text(HDI(2),yLim*0.4, num2str(HDI(2),'%.4f'));
 
-%% Change font size
+%% Change font size and hide y-axis
 set(gca,'FontSize',8);
 figureHandle = gcf;
 set(findall(figureHandle,'type','text'),'fontSize',11)
+set(gca,'YTick',[])
+set(gca,'YColor','w')
 end
