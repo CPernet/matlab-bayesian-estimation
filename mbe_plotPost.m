@@ -90,10 +90,10 @@ hold on;
 %% Display mean or mode
 if showMode == 0
     meanParam = postSummary.mean;
-    text(meanParam,yLim,['mean = ' num2str(meanParam,'%.4f')]);
+    text(meanParam,yLim,['mean = ' num2str(meanParam,'%.3f')]);
 else
     modeParam = postSummary.mode;
-    text(modeParam,yLim,['mode = ' num2str(modeParam,'%.4f')]);
+    text(modeParam,yLim,['mode = ' num2str(modeParam,'%.3f')]);
 end
 
 %% Display comparison value
@@ -132,4 +132,5 @@ figureHandle = gcf;
 set(findall(figureHandle,'type','text'),'fontSize',11)
 set(gca,'YTick',[])
 set(gca,'YColor','w')
+set(gca, 'TickDir', 'out')
 end

@@ -13,7 +13,7 @@
 clear;clc;
 
 %% Load some data
-% EXAMPLE DATA (see Kruschke, 2011)
+% EXAMPLE DATA (see Kruschke, 2012)
 % see http://www.indiana.edu/~kruschke/BEST/ for R code
 
 y1 = [101,100,102,104,102,97,105,105,98,101,100,123,105,103,100,95,102,106,...
@@ -29,7 +29,7 @@ nTotal = length(y);
 
 
 %% Specify prior constants, shape and rate for gamma distribution
-% See Kruschke (2011) for further description
+% See Kruschke (2012) for further description
 mu1PriorMean = mean(y);
 mu1PriorSD = std(y)*5;    % flat prior
 mu2PriorMean = mean(y);
@@ -54,7 +54,7 @@ dataList = struct('y',y,'x',x,'nTotal',nTotal,...
 
 %% Specify MCMC properties
 % Number of MCMC steps that are saved for each chain
-numSavedSteps = 10000;
+numSavedSteps = 4000;
 
 % Number of separate MCMC chains
 nChains = 3;
@@ -62,7 +62,7 @@ nChains = 3;
 % Number of steps that are thinned, matjags will only keep every nth step
 % This does not affect the number of saved steps. I.e. in order to compute
 % 10000 saved steps, matjags/JAGS will compute 50000 steps
-thinSteps = 1;
+thinSteps = 5;
 
 % Number of burn-in samples
 burnInSteps = 1000;
@@ -116,15 +116,16 @@ model = fullfile(pwd,'mbe_2gr_example.txt');
     'nSamples',numSavedSteps);
 
 %% Restructure the output
+% This transforms the output of matjags into the format that mbe is using
 mcmcChain = mbe_restructChains(mcmcChain);
 
 %% Examine the chains
 mbe_diagMCMC(mcmcChain);
-summary = mbe_summary(mcmcChain);
 
 %% Examine the results
 % Concatenate individual chains to one long chain first
 mcmcChain = mbe_concChains(mcmcChain);
+summary = mbe_2gr_summary(mcmcChain);
 data{1} = y1;
 data{2} = y2;
 mbe_2gr_plots(data,mcmcChain);

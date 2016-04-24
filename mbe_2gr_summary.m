@@ -24,7 +24,6 @@ function summary = mbe_2gr_summary(mcmcChain)
 % Created: 2016-03-13
 % Version: v1.2 (2016-04-24)
 %-------------------------------------------------------------------------
-
 summary.mu1 = mbe_summary(mcmcChain.mu1);
 summary.mu2 = mbe_summary(mcmcChain.mu2);
 summary.muDiff = mbe_summary((mcmcChain.mu1 - mcmcChain.mu2),0);

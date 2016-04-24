@@ -62,7 +62,7 @@ mbe_plotData(y,nu,mu1,sigma1,mu2,sigma2);
 % Plot posterior distribution of parameter nu:
 %-----------------------------------------------------------------
 figure('Color','w','NumberTitle','Off','Position',[100,50,800,600]);
-subplot(4,2,6);
+subplot(4,2,7);
 mbe_plotPost(log10(nu),'credMass',0.95,'xlab','log10(\nu)','PlotTitle','Nu');
 
 %-----------------------------------------------------------------
@@ -88,8 +88,9 @@ subplot(4,2,2);
 mbe_plotPost(sigma1,'xlab','\sigma1','xlim',xLim,'PlotTitle','Group 1 Std. Dev.');
 subplot(4,2,4);
 mbe_plotPost(sigma2,'xlab','\sigma2','xlim',xLim,'PlotTitle','Group 2 Std. Dev.');
-subplot(4,2,7);
-mbe_plotPost(sigma1-sigma2,'xlab','\sigma1-\sigma2','PlotTitle','Difference of Std. Dev.');
+subplot(4,2,6);
+mbe_plotPost(sigma1-sigma2,'xlab','\sigma1-\sigma2','PlotTitle',...
+    'Difference of Std. Dev.','CompVal',0);
 
 %-----------------------------------------------------------------
 % Plot of estimated effect size. Effect size is d-sub-a from
