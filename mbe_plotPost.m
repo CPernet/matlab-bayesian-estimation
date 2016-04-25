@@ -21,8 +21,9 @@ function postSummary = mbe_plotPost(SampleVec, varargin)
 % EXAMPLE:
 % postSummary = mbe_plotPost(paramSampleVec,'rope',[-0.1 0.1],'credMass',0.95)
 
-% Largely based on R code by Kruschke, J. K. (2015). Doing Bayesian Data Analysis, 
-% Second Edition: A Tutorial with R, JAGS, and Stan. Academic Press / Elsevier.
+% Largely based on R code introduced in the following paper:
+% Kruschke, J.K., Bayesian Estimation supersedes the t-test.
+% Journal of Experimental Psychology: General, Vol 142(2), May 2013, 573-603. 
 % see http://www.indiana.edu/~kruschke/BEST/ for R code
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
