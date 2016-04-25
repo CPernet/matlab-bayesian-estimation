@@ -2,19 +2,17 @@
 
 ## Synopsis
 
-This is an easy-to-use Matlab Toolbox for Bayesian Estimation. The basis of the code is a Matlab implementation of Kruschke's R code described in the following paper (Kruschke, 2013), book (Kruschke, 2014) and website (http://www.indiana.edu/~kruschke/BEST/). This toolbox is intended to provide the user with similiar possible analyses as Kruschke's code does, yet makes it applicable in a Matlab-only environment. In addition, it strives to provide the user with better structured and thus more comprehensible code.
-
-Since I am using this code to do Bayesian Estimation in EEG data analyses, I added functions and examples providing the user with the possibility to do time series analyses.
+This is a Matlab Toolbox for Bayesian Estimation. The basis of the code is a Matlab implementation of Kruschke's R code described in the following paper (Kruschke, 2013), book (Kruschke, 2014) and website (http://www.indiana.edu/~kruschke/BEST/). This toolbox is intended to provide the user with similiar possible analyses as Kruschke's code does, yet makes it applicable in a Matlab-only environment. In addition, I will try to add additional features in the future to make it applicable for more than just a group comparison.
 
 
 ## Code Example
 
-This example uses the data provided in Kruschke's BEST paper (2011).
-Run the script mbe_example.m.
+This example uses the data provided in Kruschke's BEST paper (2013).
+Run the script mbe_2gr_example.m.
 
 ```
 %% Load some data
-% EXAMPLE DATA (see Kruschke, 2011)
+% EXAMPLE DATA (see Kruschke, 2013)
 % see http://www.indiana.edu/~kruschke/BEST/ for R code
 
 y1 = [101,100,102,104,102,97,105,105,98,101,100,123,105,103,100,95,102,106,...
@@ -56,15 +54,19 @@ dataList = struct('y',y,'x',x,'nTotal',nTotal,...
 Now specify the MCMC properties and run JAGS:
 ```
 %% Specify MCMC properties
-% Number of MCMC steps that are saved for each chain
-numSavedSteps = 10000;
+% Number of MCMC steps that are saved for EACH chain
+% This is different to Rjags, where you would define the number of
+% steps to be saved for all chains together (in this example 12000)
+numSavedSteps = 4000;
 
 % Number of separate MCMC chains
 nChains = 3;
 
-% Number of steps that are thinned, matjags will only keep every nth step
-% This does not affect the number of saved steps. I.e. in order to compute
-% 10000 saved steps, matjags/JAGS will compute 50000 steps
+% Number of steps that are thinned, matjags will only keep every nth
+% step. This does not affect the number of saved steps. I.e. in order
+% to compute 10000 saved steps, matjags/JAGS will compute 50000 steps
+% If memory isn't an issue, Kruschke recommends to use longer chains
+% and no thinning at all.
 thinSteps = 5;
 
 % Number of burn-in samples
@@ -107,6 +109,7 @@ fclose(fileID);
 model = fullfile(pwd,'mbe_2gr_example.txt');
 
 %% Run the chains using matjags and JAGS
+% In case you have the Parallel Computing Toolbox, use ('doParallel',1)
 [samples, stats, mcmcChain] = matjags(...
     dataList,...
     model,...
@@ -117,7 +120,10 @@ model = fullfile(pwd,'mbe_2gr_example.txt');
     'thin', thinSteps,...
     'verbosity',2,...
     'nSamples',numSavedSteps);
-
+%% Restructure the output
+% This transforms the output of matjags into the format that mbe is
+% using
+mcmcChain = mbe_restructChains(mcmcChain);
 ```
 Examine the chains with the mbe_diagMCMC() function:
 ```
@@ -128,8 +134,13 @@ You will get these figures:
 
 Now examine the posterior distributions of the parameters.
 ```
+%% Examine the results
+% At this point, we want to use all the chains at once, so we
+% need to concatenate the individual chains to one long chain first
 mcmcChain = mbe_concChains(mcmcChain);
+% Get summary and posterior plots
 summary = mbe_2gr_summary(mcmcChain);
+% Data has to be in a cell array
 data{1} = y1;
 data{2} = y2;
 mbe_2gr_plots(data,mcmcChain);
@@ -140,20 +151,43 @@ These are examples of the figures that can be created to show the posterior dist
 ![alt tag](https://cloud.githubusercontent.com/assets/17763631/14428034/2d3323fa-ffef-11e5-8fcb-c0163dd34dfe.jpg)
 
 
+## Functions
+#### Examples
+* mbe_2gr_example.m
+  - This is an example script for a comparison of two groups.
+* mbe_2gr_plots.m
+```
+%   Make histogram of data with superimposed posterior prediction check
+  %   and plots posterior distribution of monitored parameters.
+  %
+  % INPUT:
+  %   y
+  %       cell array containing vectors for y1 and y2
+  %   mcmcChain
+  %       structure with one MCMC-chain, should contain all monitored parameters
+  %
+  % Specify the following name/value pairs for additional plot options:
+  %        Parameter      Value
+  %       'plotPairs'     show correlation plot of parameters ([1],0)
+  %
+  ```
+
+* mbe_2gr_summary.m
+
+
+
+
 ## Installation
 
 The MBE toolbox uses the open source software **JAGS** (Just Another Gibbs Sampler) to conduct Markov-Chain-Monte-Carlo sampling. Instead of using Rjags (as you would when using Kruschke's code), MBE uses the Matlab-JAGS interface **matjags.m** that will communicate with JAGS and import the results back to Matlab.
 
-**JAGS** can be downloaded here:
-http://mcmc-jags.sourceforge.net/
+* **JAGS** can be downloaded here: http://mcmc-jags.sourceforge.net/
 
-**matjags.m** can be downloaded here:
-http://psiexp.ss.uci.edu/research/programs_data/jags/
+* **matjags.m** can be downloaded here: http://psiexp.ss.uci.edu/research/programs_data/jags/
 
-Further installation descriptions are provided on these websites.
-If you have installed JAGS and matjags.m successfully, the MBE Toolbox should work right out of the box. Just add the directory to your Matlab path.
+* Further installation descriptions are provided on these websites. If you have installed JAGS and matjags.m successfully, the MBE Toolbox should work right out of the box. Just add the directory to your Matlab path.
 
-The MBE Toolbox uses additional functions obtained via Matlab's File Exchange. The functions are contained in this toolbox and don't need to be downloaded separately. The licenses of these functions are stored in the corresponding folder.
+* The MBE Toolbox uses additional functions obtained via Matlab's File Exchange. The functions are contained in this toolbox and don't need to be downloaded separately. The licenses of these functions are stored in the corresponding folder.
 
 
 ## References
