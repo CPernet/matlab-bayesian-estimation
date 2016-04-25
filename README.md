@@ -157,12 +157,52 @@ These are examples of the figures that can be created to show the posterior dist
 > - This is an example script for a comparison of two groups.
 
 * mbe_2gr_plots.m
-> - Make histogram of data with superimposed posterior prediction check and plots posterior distribution of monitored parameters.
+> - Makes histogram of data with superimposed posterior prediction check and plots posterior distribution of monitored parameters.
 
 * mbe_2gr_summary.m
 > - Computes summary statistics for all parameters of a 2 group comparison.This will only work for a mcmc chain with parameters mu1,mu2,sigma1,sigma2 and nu.
 
+#### MCMC Diagnostics
+* mbe_diagMCMC.m
+> -  Plots autocorrelation, parameter trace, shrink factor and parameter density.
 
+* mbe_tracePlot.m
+> - Creates a trace plot for a parameter of a MCMC chain.
+
+* mbe_acfPlot.m
+> - Plots autocorrelation of MCMC chain parameter for every chain.
+
+* mbe_gelmanPlot.m
+> - This plot shows the evolution of Gelman and Rubin's shrink factor as the number of iterations increases. More than one chain is needed.
+
+* mbe_mcmcDensPlot.m
+> - Plots probability density function MCMC chains of one parameter.Also shows the HDI of the parameter for every chain.
+
+#### Posterior Plots
+* mbe_plotPost.m
+> - Plotting posterior distribution with highest density interval.
+
+* mbe_plotPairs.m
+> - Plots matrix of scatter plots for any combination of parameters.
+
+* mbe_plotData.m
+> - Plots histogram of observed data. If specified, adds superimposed posterior predictive check. Works only when comparing two groups.
+
+#### Utilities
+* mbe_restructChains.m
+> Restructures MCMC output (of matjags). Matjags creates multiple structures when more than one chain is used, but stores parameters with the same name in the same variable. This function splits up the parameters and creates one structure with all the monitored parameters. Parameters are stored as matrix with NxMxT, where N is the number of iterations per chain, M is the number of chains and T is the number of time steps (only for time course analysis).
+
+* mbe_concChains.m
+> Concatenates several MCMC chains into one.
+
+* mbe_summary.m
+> Computes summary statistics for one parameter of mcmc chain Summary statistics include mean, median, mode, HDI and if a comparison value is specified the percentage of parameter data points above the threshold. This is useful i.e. for comparing groups and calculating the difference. The comparison value would then be 0.
+
+* mbe_gammaShRa.m
+> Calculates shape and rate for gamma distribution.
+
+* mbe_hdi.m
+> Computes highest density interval from a sample of representative values, estimated as shortest credible interval.
 
 
 ## Installation
