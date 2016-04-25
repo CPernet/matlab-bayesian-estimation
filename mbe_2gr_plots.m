@@ -38,14 +38,12 @@ plotPairs = p.Results.plotPairs;
 % Get parameter names
 names = fieldnames(mcmcChain);
 
-
 %% -----------------------------------------------------------------
 % Plot correlations between parameters
 %-----------------------------------------------------------------
 if plotPairs
     mbe_plotPairs(mcmcChain,1000)
 end
-
 
 %% -----------------------------------------------------------------
 % Plot data y and smattering of posterior predictive curves:
@@ -107,11 +105,6 @@ mbe_plotPost(effectSize,'rope',[-0.1,0.1],'xlab',str,'PlotTitle','Effect Size');
 % N2 = length(y2)
 % effectSize = ( mu1 - mu2 ) / sqrt( ( sigma1^2 *(N1-1) + sigma2^2 *(N2-1) )
 %                                    / (N1+N2-2) )
-% Be sure also to change BESTsummary function, above.
-% histInfo = plotPost( effectSize , compVal=0 ,  ROPE=ROPEeff ,
-%          showCurve=showCurve ,
-%          xlab=bquote( (mu[1]-mu[2])
-%          /sqrt((sigma[1]^2 *(N[1]-1)+sigma[2]^2 *(N[2]-1))/(N[1]+N[2]-2)) ),
-%          cenTend=c('mode','median','mean')[1] , cex.lab=1.0 , main='Effect Size' , col='skyblue' )
+% Be sure also to change mbe_summary function.
 
 end
