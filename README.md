@@ -130,7 +130,7 @@ Examine the chains with the mbe_diagMCMC() function:
 mbe_diagMCMC(mcmcChain);
 ```
 You will get these figures:
-![alt tag](https://cloud.githubusercontent.com/assets/17763631/14428037/2d3a72a4-ffef-11e5-8d12-eb2f98f4f108.jpg)
+![alt tag](https://cloud.githubusercontent.com/assets/17763631/14780816/a0c107dc-0ad6-11e6-967e-468e8e553e21.jpg)
 
 Now examine the posterior distributions of the parameters.
 ```
@@ -146,9 +146,9 @@ data{2} = y2;
 mbe_2gr_plots(data,mcmcChain);
 ```
 These are examples of the figures that can be created to show the posterior distributions:
-![alt tag](https://cloud.githubusercontent.com/assets/17763631/14428032/2d2907c6-ffef-11e5-8db6-b8103da62c78.jpg)
-![alt tag](https://cloud.githubusercontent.com/assets/17763631/14428036/2d380186-ffef-11e5-8165-301fa3f731d1.jpg)
-![alt tag](https://cloud.githubusercontent.com/assets/17763631/14428034/2d3323fa-ffef-11e5-8fcb-c0163dd34dfe.jpg)
+![alt tag](https://cloud.githubusercontent.com/assets/17763631/14780814/a0ad9f44-0ad6-11e6-96fe-9afdd2c2f200.jpg)
+![alt tag](https://cloud.githubusercontent.com/assets/17763631/14780815/a0bf847a-0ad6-11e6-8e2c-59fe8143dbec.jpg)
+![alt tag](https://cloud.githubusercontent.com/assets/17763631/14780813/a0a8c316-0ad6-11e6-8648-0fdb4dcd4ecc.jpg)
 
 
 ## Functions
