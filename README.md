@@ -154,42 +154,14 @@ These are examples of the figures that can be created to show the posterior dist
 ## Functions
 #### Examples
 * mbe_2gr_example.m
-  - This is an example script for a comparison of two groups.
+> - This is an example script for a comparison of two groups.
+
 * mbe_2gr_plots.m
-> ```
-  % Make histogram of data with superimposed posterior prediction check
-  %   and plots posterior distribution of monitored parameters.
-  %
-  % INPUT:
-  %   y
-  %       cell array containing vectors for y1 and y2
-  %   mcmcChain
-  %       structure with one MCMC-chain, should contain all monitored parameters
-  %
-  % Specify the following name/value pairs for additional plot options:
-  %        Parameter      Value
-  %       'plotPairs'     show correlation plot of parameters ([1],0)
-  %
-  ```
+> - Make histogram of data with superimposed posterior prediction check and plots posterior distribution of monitored parameters.
 
 * mbe_2gr_summary.m
-> ```
-% Computes summary statistics for all parameters of a 2 group comparison.
-%   This will only work for a mcmc chain with parameters mu1,mu2,sigma1,
-%   sigma2 and nu.
-%
-% INPUT:
-%   mcmcChain
-%       structure with fields for mu, sigma, nu
-%
-% OUTPUT:
-%   summary
-%       outputs structure containing mu1, mu2, muDiff, sigma1, sigma2,
-%       sigmaDiff, nu, nuLog10 and effectSize
-%
-% EXAMPLE:
-%   summary = mbe_2gr_summary(mcmcChain);
-```
+> - Computes summary statistics for all parameters of a 2 group comparison.This will only work for a mcmc chain with parameters mu1,mu2,sigma1,sigma2 and nu.
+
 
 
 
