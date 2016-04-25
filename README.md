@@ -162,6 +162,15 @@ These are examples of the figures that can be created to show the posterior dist
 * mbe_2gr_summary.m
 > - Computes summary statistics for all parameters of a 2 group comparison.This will only work for a mcmc chain with parameters mu1,mu2,sigma1,sigma2 and nu.
 
+* mbe_1gr_example.m
+> - This is an example script for a one group Bayes estimation.
+
+* mbe_1gr_plots.m
+> - Makes histogram of data with superimposed posterior prediction check and plots posterior distribution of monitored parameters.
+
+* mbe_1gr_summary.m
+> - Computes summary statistics for all parameters.This will only work for a mcmc chain with parameters mu1,sigma1 and nu.
+
 #### MCMC Diagnostics
 * mbe_diagMCMC.m
 > -  Plots autocorrelation, parameter trace, shrink factor and parameter density.

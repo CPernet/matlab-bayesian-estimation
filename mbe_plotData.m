@@ -47,8 +47,9 @@ else
 end
 
 %% Plot data for y1
-figure('Color','w','NumberTitle','Off','Position',[100,50,800,600]);
-subplot(size(y,2),1,1);
+if exist('y2','var')
+subplot(2,1,1);
+end
 % Select thinned steps in chain for plotting of posterior predictive curves:
 chainLength = size(mu1,1);
 nCurvesToPlot = 30;
