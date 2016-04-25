@@ -3,7 +3,7 @@ function postSummary = mbe_plotPost(SampleVec, varargin)
 % Plotting posterior distribution with highest density interval. 
 % 
 % INPUT:
-% paramSampleVec is a MCMC chain with n iterations.
+% SampleVec is a MCMC chain with n iterations.
 %
 % Specify the following name/value pairs for additional plot options:
 %
@@ -28,7 +28,6 @@ function postSummary = mbe_plotPost(SampleVec, varargin)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-13
 % Version: v1.00 (2016-03-15)
-% Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 
 % Get input
