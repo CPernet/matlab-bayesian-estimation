@@ -1,4 +1,4 @@
-%% Matlab Toolbox for Bayesian Estimation - Example
+%% Matlab Toolbox for Bayesian Estimation - Two Group Example
 % This is an example script for a two group comparison.
 
 % Largely based on R code introduced in the following paper:
