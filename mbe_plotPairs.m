@@ -20,7 +20,6 @@ function mbe_plotPairs(mcmcChain,nPtToPlot)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-14
 % Version: v1.00 (2016-03-15)
-% Matlab 8.1.0.604 (R2013a) on PCWIN
 %-------------------------------------------------------------------------
 
 % Create matrix out of mcmcChain for easier indexing in for-loops
@@ -42,7 +41,7 @@ for indVar = 1:nVar
     for jindVar = 1:nVar
         if jindVar < indVar
             subplot(nVar, nVar, sub2ind([nVar, nVar], indVar, jindVar));
-            scatter(X(:,indVar), X(:,jindVar), ptSize);
+            scatter(X(:,indVar), X(:,jindVar), ptSize,[0.4 0.7 1]);
             box on;
             set(gca,'FontSize',6)
         elseif jindVar == indVar
