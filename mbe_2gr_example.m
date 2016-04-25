@@ -1,21 +1,19 @@
 %% Matlab Toolbox for Bayesian Estimation - Example
 % This is an example script for a two group comparison.
 
-% Largely based on R code by Kruschke, J. K. (2015). Doing Bayesian Data Analysis,
-% Second Edition: A Tutorial with R, JAGS, and Stan. Academic Press / Elsevier.
+% Largely based on R code introduced in the following paper:
+% Kruschke, J.K., Bayesian Estimation supersedes the t-test.
+% Journal of Experimental Psychology: General, Vol 142(2), May 2013, 573-603. 
 % see http://www.indiana.edu/~kruschke/BEST/ for R code
 % Nils Winter (nils.winter1@gmail.com)
 % Johann-Wolfgang-Goethe University, Frankfurt
 % Created: 2016-03-15
-% Version: v2.00 (2016-04-13)
-% Matlab 8.1.0.604 (R2013a) on PCWIN
+% Version: v2.1 (2016-04-25)
 %-------------------------------------------------------------------------
 clear;clc;
 
 %% Load some data
-% EXAMPLE DATA (see Kruschke, 2012)
-% see http://www.indiana.edu/~kruschke/BEST/ for R code
-
+% EXAMPLE DATA (see Kruschke, 2013)
 y1 = [101,100,102,104,102,97,105,105,98,101,100,123,105,103,100,95,102,106,...
     109,102,82,102,100,102,102,101,102,102,103,103,97,97,103,101,97,104,...
     96,103,124,101,101,100,101,101,104,100,101];
@@ -29,7 +27,7 @@ nTotal = length(y);
 
 
 %% Specify prior constants, shape and rate for gamma distribution
-% See Kruschke (2012) for further description
+% See Kruschke (2013) for further description
 mu1PriorMean = mean(y);
 mu1PriorSD = std(y)*5;    % flat prior
 mu2PriorMean = mean(y);
@@ -41,7 +39,7 @@ sigma2PriorSD = std(y)*5;
 nuPriorMean = 30;
 nuPriorSD = 30;
 
-% Now get shape and rate for gamma distribution
+% Now get shape and rate values for gamma distribution
 [Sh1, Ra1] = mbe_gammaShRa(sigma1PriorMode,sigma1PriorSD,'mode');
 [Sh2, Ra2] = mbe_gammaShRa(sigma2PriorMode,sigma2PriorSD,'mode');
 [ShNu, RaNu] = mbe_gammaShRa(nuPriorMean,nuPriorSD,'mean');
@@ -53,15 +51,19 @@ dataList = struct('y',y,'x',x,'nTotal',nTotal,...
     'Sh1',Sh1,'Ra1',Ra1,'Sh2',Sh2,'Ra2',Ra2,'ShNu',ShNu,'RaNu',RaNu);
 
 %% Specify MCMC properties
-% Number of MCMC steps that are saved for each chain
+% Number of MCMC steps that are saved for EACH chain
+% This is different to Rjags, where you would define the number of 
+% steps to be saved for all chains together (in this example 12000) 
 numSavedSteps = 4000;
 
 % Number of separate MCMC chains
 nChains = 3;
 
-% Number of steps that are thinned, matjags will only keep every nth step
-% This does not affect the number of saved steps. I.e. in order to compute
-% 10000 saved steps, matjags/JAGS will compute 50000 steps
+% Number of steps that are thinned, matjags will only keep every nth 
+% step. This does not affect the number of saved steps. I.e. in order
+% to compute 10000 saved steps, matjags/JAGS will compute 50000 steps
+% If memory isn't an issue, Kruschke recommends to use longer chains
+% and no thinning at all.
 thinSteps = 5;
 
 % Number of burn-in samples
@@ -85,8 +87,7 @@ end
 
 %% Specify the JAGS model
 % This will write a JAGS model to a text file
-% You can also write the JAGS model directly to a text file or use
-% one of the models that come with this toolbox
+% You can also write the JAGS model directly to a text file
 
 modelString = [' model {\n',...
     '    for ( i in 1:nTotal ) {\n',...
@@ -104,6 +105,7 @@ fclose(fileID);
 model = fullfile(pwd,'mbe_2gr_example.txt');
 
 %% Run the chains using matjags and JAGS
+% In case you have the Parallel Computing Toolbox, use ('doParallel',1)
 [~, ~, mcmcChain] = matjags(...
     dataList,...
     model,...
@@ -112,20 +114,24 @@ model = fullfile(pwd,'mbe_2gr_example.txt');
     'nChains', nChains,...
     'nBurnin', burnInSteps,...
     'thin', thinSteps,...
-    'verbosity',2,...
+    'verbosity',1,...
     'nSamples',numSavedSteps);
 
 %% Restructure the output
-% This transforms the output of matjags into the format that mbe is using
+% This transforms the output of matjags into the format that mbe is 
+% using
 mcmcChain = mbe_restructChains(mcmcChain);
 
 %% Examine the chains
 mbe_diagMCMC(mcmcChain);
 
 %% Examine the results
-% Concatenate individual chains to one long chain first
+% At this point, we want to use all the chains at once, so we
+% need to concatenate the individual chains to one long chain first
 mcmcChain = mbe_concChains(mcmcChain);
+% Get summary and posterior plots
 summary = mbe_2gr_summary(mcmcChain);
+% Data has to be in a cell array
 data{1} = y1;
 data{2} = y2;
 mbe_2gr_plots(data,mcmcChain);
